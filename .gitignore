@@ -8,3 +8,5 @@ secret.asc
 autogen_*
 Makefile_*
 /.idea/
+_cache_dnf
+_cache_yum

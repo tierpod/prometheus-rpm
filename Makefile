@@ -79,22 +79,22 @@ manual7: $(addprefix build7-,$(MANUAL))
 
 $(addprefix build10-,$(MANUAL)):
 	$(eval PACKAGE=$(subst build10-,,$@))
-	[ -d ${PWD}/_dist10 ] || mkdir ${PWD}/_dist10 
-	[ -d ${PWD}/_cache_dnf ] || mkdir ${PWD}/_cache_dnf 
+	[ -d ${PWD}/_dist10 ] || mkdir ${PWD}/_dist10
+	[ -d ${PWD}/_cache_dnf ] || mkdir ${PWD}/_cache_dnf
 	docker run ${DOCKER_FLAGS} \
 		-v ${PWD}/${PACKAGE}:/rpmbuild/SOURCES \
 		-v ${PWD}/_dist10:/rpmbuild/RPMS/x86_64 \
 		-v ${PWD}/_dist10:/rpmbuild/RPMS/noarch \
 		-v ${PWD}/_cache_dnf:/var/cache/dnf \
-		ghcr.io/lest/centos-rpm-builder:alma10 \
+		ghcr.io/lest/centos-rpm-builder:oracle10 \
 		build-spec SOURCES/${PACKAGE}.spec
 	# Test the install
-	[ -d ${PWD}/_dist10 ] || mkdir ${PWD}/_dist10      
+	[ -d ${PWD}/_dist10 ] || mkdir ${PWD}/_dist10
 	[ -d ${PWD}/_cache_dnf ] || mkdir ${PWD}/_cache_dnf
 	docker run --privileged ${DOCKER_FLAGS} \
 		-v ${PWD}/_dist10:/var/tmp/ \
 		-v ${PWD}/_cache_dnf:/var/cache/dnf \
-		ghcr.io/lest/centos-rpm-builder:alma10 \
+		ghcr.io/lest/centos-rpm-builder:oracle10 \
 		/bin/bash -c '/usr/bin/dnf install --verbose -y /var/tmp/${PACKAGE}*.rpm'
 
 $(addprefix build9-,$(MANUAL)):
@@ -167,22 +167,22 @@ $(addprefix build10-,$(AUTO_GENERATED)):
 	$(eval PACKAGE=$(subst build10-,,$@))
 
 	python3 ./generate.py --templates ${PACKAGE}
-	[ -d ${PWD}/_dist10 ] || mkdir ${PWD}/_dist10      
+	[ -d ${PWD}/_dist10 ] || mkdir ${PWD}/_dist10
 	[ -d ${PWD}/_cache_dnf ] || mkdir ${PWD}/_cache_dnf
 	docker run ${DOCKER_FLAGS} \
 		-v ${PWD}/${PACKAGE}:/rpmbuild/SOURCES \
 		-v ${PWD}/_dist10:/rpmbuild/RPMS/x86_64 \
 		-v ${PWD}/_dist10:/rpmbuild/RPMS/noarch \
 		-v ${PWD}/_cache_dnf:/var/cache/dnf \
-		ghcr.io/lest/centos-rpm-builder:alma10 \
+		ghcr.io/lest/centos-rpm-builder:oracle10 \
 		build-spec SOURCES/autogen_${PACKAGE}.spec
 	# Test the install
-	[ -d ${PWD}/_dist10 ] || mkdir ${PWD}/_dist10      
+	[ -d ${PWD}/_dist10 ] || mkdir ${PWD}/_dist10
 	[ -d ${PWD}/_cache_dnf ] || mkdir ${PWD}/_cache_dnf
 	docker run --privileged ${DOCKER_FLAGS} \
 		-v ${PWD}/_dist10:/var/tmp/ \
 		-v ${PWD}/_cache_dnf:/var/cache/dnf \
-		ghcr.io/lest/centos-rpm-builder:alma10 \
+		ghcr.io/lest/centos-rpm-builder:oracle10 \
 		/bin/bash -c '/usr/bin/dnf install --verbose -y /var/tmp/${PACKAGE}*.rpm'
 
 sign10:
@@ -192,7 +192,7 @@ sign10:
 		-v ${PWD}/RPM-GPG-KEY-prometheus-rpm:/rpmbuild/RPM-GPG-KEY-prometheus-rpm \
 		-v ${PWD}/secret.asc:/rpmbuild/secret.asc \
 		-v ${PWD}/.passphrase:/rpmbuild/.passphrase \
-		ghcr.io/lest/centos-rpm-builder:alma10 \
+		ghcr.io/lest/centos-rpm-builder:oracle10 \
 		bin/sign
 
 $(addprefix build9-,$(AUTO_GENERATED)):
