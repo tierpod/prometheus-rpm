@@ -37,6 +37,9 @@ metadata_expire=300
 
 ## Build RPMs manually
 
+Prepare build images from [centos-rpm-builder-docker][6] (needed for fixed Centos 7 EOL builds
+and added Oracle Linux 10 build) and tag them (follow README.md in that repo).
+
 Build all packages with:
 
 ``` shell
@@ -61,3 +64,4 @@ available in [Github][4] or in [Galaxy][5].
 [3]: https://www.ansible.com/
 [4]: https://github.com/cogini/ansible-role-prometheus-rpm
 [5]: https://galaxy.ansible.com/cogini/prometheus-rpm/
+[6]: https://github.com/tierpod/centos-rpm-builder-docker
